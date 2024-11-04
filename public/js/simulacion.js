@@ -51,6 +51,7 @@ function generarCronograma(montoCapital, TEM, plazoMeses, pagoMensual) {
 
   return cronograma;
 }
+
 function actualizarResultados() {
   const montoInmueble = document.getElementById('montoInmueble').value;
   const cuotaInicialPorcentaje = document.getElementById('cuotaInicialPorcentaje').value;
@@ -72,10 +73,10 @@ function mostrarCronograma(cronograma) {
   tabla.innerHTML = `
       <tr>
           <th>Mes</th>
-          <th>Cuota Mensual</th>
-          <th>Interés Mensual</th>
           <th>Aporte Capital</th>
-          <th>Saldo</th>
+          <th>Interés Mensual</th>
+          <th>Cuota Mensual</th>          
+          <th>Saldo Capital</th>
       </tr>
   `;
 
@@ -83,14 +84,15 @@ function mostrarCronograma(cronograma) {
       const fila = document.createElement('tr');
       fila.innerHTML = `
           <td>${pago.mes}</td>
-          <td>S/ ${pago.pagoMensual}</td>
-          <td>S/ ${pago.interes}</td>
           <td>S/ ${pago.aporteC}</td>
+          <td>S/ ${pago.interes}</td>
+          <td>S/ ${pago.pagoMensual}</td>
           <td>S/ ${pago.saldo}</td>
       `;
       tabla.appendChild(fila);
   });
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('simulationForm');
@@ -102,3 +104,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   actualizarResultados(); // Actualizar resultados iniciales
 });
+
+function actualizarPrecio() {
+  const selectPropiedad = document.getElementById('propiedad');
+  const precio = selectPropiedad.options[selectPropiedad.selectedIndex].propiedad.precio;
+
+  // Actualiza el campo de monto del inmueble con el precio seleccionado
+  const montoInmuebleInput = document.getElementById('montoInmueble');
+  montoInmuebleInput.value = precio ? parseFloat(precio).toFixed(2) : '';
+  
+  // Llama a actualizarResultados para recalcular los resultados con el nuevo monto
+  actualizarResultados();
+}
+
+function mostrarPrecio() {
+  const select = document.getElementById('propiedad');
+  const precioInput = document.getElementById('montoInmueble');
+  const precioSeleccionado = select.options[select.selectedIndex].getAttribute('data-precio');
+  precioInput.value = precioSeleccionado ? `${(precioSeleccionado).toLocaleString()}` : '';
+}

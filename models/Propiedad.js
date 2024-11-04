@@ -46,8 +46,11 @@ const Propiedad = db.define('propiedades', {
     visitas: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
-    }
-
+    },
+    precio :{
+        type: DataTypes.DECIMAL(10,2),
+        allowNull: false
+    },
 })
 
 export default Propiedad;

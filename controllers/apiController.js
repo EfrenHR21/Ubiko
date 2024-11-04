@@ -1,12 +1,12 @@
-import {Propiedad, Precio, Categoria} from '../models/index.js'
+import {Propiedad,  Categoria} from '../models/index.js'
 
 //devuelve una respuesta json
 const propiedades = async(req, res) => {
 
     const propiedades = await Propiedad.findAll({
         include: [
-            {model: Precio, as: 'precio'},
             {model: Categoria, as: 'categoria'},
+            //{model: Categoria, as: 'categoria'},
         ]
     })
 

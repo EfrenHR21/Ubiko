@@ -4,7 +4,7 @@ import { DataTypes } from "sequelize";
 
 const Credito = db.define('creditos', {
     montoInmueble: { 
-        type: DataTypes.DECIMAL, 
+        type: DataTypes.DECIMAL(10,2), 
         allowNull: false 
     },
     cuotaInicialPorcentaje: { 
@@ -12,7 +12,7 @@ const Credito = db.define('creditos', {
         allowNull: false 
     },
     TEA: { 
-        type: DataTypes.DECIMAL, 
+        type: DataTypes.DECIMAL(10,2),  
         allowNull: false 
     },
     plazoMeses: { 
@@ -21,16 +21,16 @@ const Credito = db.define('creditos', {
     },
     // Columnas de resultados calculados
     cuotaInicial: { 
-        type: DataTypes.DECIMAL 
+        type: DataTypes.DECIMAL(10,2), 
     },
     montoCapital: { 
-        type: DataTypes.DECIMAL 
+        type: DataTypes.DECIMAL(10,2),  
     },
     TEM: { 
-        type: DataTypes.DECIMAL 
+        type: DataTypes.DECIMAL(10,2), 
     },
     pagoMensual: { 
-        type: DataTypes.INTEGER 
+        type: DataTypes.DECIMAL(10,2),  
     }
 
 })

@@ -1,7 +1,6 @@
 import { unlink } from "node:fs/promises";
 import { validationResult } from "express-validator";
 import {
-  Precio,
   Categoria,
   Propiedad,
   Mensaje,
@@ -33,7 +32,7 @@ const admin = async (req, res) => {
         where: { usuarioId: id },
         include: [
           { model: Categoria, as: "categoria" },
-          { model: Precio, as: "precio" },
+          //{ model: Precio, as: "precio" },
           { model: Mensaje, as: "mensajes" },
           { model: Usuario, as: "usuario" },
         ],
@@ -64,10 +63,10 @@ const admin = async (req, res) => {
 //Formulario sobre crear una propiedad
 const crear = async (req, res) => {
   //Consulta el Modelo de Precio y Categoria
-  const [categorias, precios, ciudades] = await Promise.all([
+  const [categorias, ciudades] = await Promise.all([
     Categoria.findAll(),
-    Precio.findAll(),
     Ciudad.findAll(),
+    //Precio.findAll(),
   ]);
 
   res.render("propiedades/crear", {
@@ -75,8 +74,8 @@ const crear = async (req, res) => {
     barra: true,
     csrfToken: req.csrfToken(),
     categorias,
-    precios,
     ciudades,
+    //precios,
     datos: {},
   });
 };
@@ -87,10 +86,10 @@ const guardar = async (req, res) => {
 
   if (!resultado.isEmpty()) {
     //Consultar el modelo de precios y categorias
-    const [categorias, precios, ciudades] = await Promise.all([
+    const [categorias, ciudades] = await Promise.all([
       Categoria.findAll(),
-      Precio.findAll(),
       Ciudad.findAll(),
+      //Precio.findAll(),
     ]);
 
     return res.render("propiedades/crear", {
@@ -98,8 +97,8 @@ const guardar = async (req, res) => {
       barra: true,
       csrfToken: req.csrfToken(),
       categorias,
-      precios,
       ciudades,
+      //precios,
       errores: resultado.array(),
       datos: req.body,
     });
@@ -132,7 +131,7 @@ const guardar = async (req, res) => {
       calle,
       lat,
       lng,
-      precioId: precio,
+      precio,
       categoriaId: categoria,
       usuarioId,
       ciudadId: ciudad,
@@ -221,9 +220,8 @@ const editar = async (req, res) => {
     return res.redirect("/mis-propiedades");
   }
   //Consulta el Modelo de Precio y Categoria
-  const [categorias, precios, ciudades] = await Promise.all([
+  const [categorias, ciudades] = await Promise.all([
     Categoria.findAll(),
-    Precio.findAll(),
     Ciudad.findAll(),
   ]);
 
@@ -232,7 +230,6 @@ const editar = async (req, res) => {
     barra: true,
     csrfToken: req.csrfToken(),
     categorias,
-    precios,
     ciudades,
     usuario: req.usuario,
     datos: propiedad,
@@ -245,9 +242,8 @@ const guardarCambios = async (req, res) => {
 
   if (!resultado.isEmpty()) {
     //Consultar el modelo de precios y categorias
-    const [categorias, precios,ciudades] = await Promise.all([
+    const [categorias, ciudades] = await Promise.all([
       Categoria.findAll(),
-      Precio.findAll(),
       Ciudad.findAll(),
     ]);
     return res.render("propiedades/editar", {
@@ -255,7 +251,6 @@ const guardarCambios = async (req, res) => {
       barra: true,
       csrfToken: req.csrfToken(),
       categorias,
-      precios,
       ciudades,
       errores: resultado.array(),
       datos: req.body,
@@ -286,7 +281,7 @@ const guardarCambios = async (req, res) => {
       calle,
       lat,
       lng,
-      precio: precioId,
+      precio,
       categoria: categoriaId,
       ciudad: ciudadId,
     } = req.body;
@@ -300,7 +295,7 @@ const guardarCambios = async (req, res) => {
       calle,
       lat,
       lng,
-      precioId,
+      precio,
       categoriaId,
       ciudadId,
     });
@@ -370,7 +365,6 @@ const mostrarPropiedad = async (req, res) => {
   //validar que la propiedad exista
   const propiedad = await Propiedad.findByPk(id, {
     include: [
-      { model: Precio, as: "precio" },
       { model: Categoria, as: "categoria" },
       { model: Usuario, as: "usuario" },
     ],
@@ -399,7 +393,6 @@ const enviarMensaje = async (req, res) => {
   //validar que la propiedad exista
   const propiedad = await Propiedad.findByPk(id, {
     include: [
-      { model: Precio, as: "precio" },
       { model: Categoria, as: "categoria" },
       //{model: Usuario, as: 'usuario'},
     ],

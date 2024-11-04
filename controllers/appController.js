@@ -1,25 +1,24 @@
 import { Sequelize } from "sequelize"
-import { Precio, Categoria, Propiedad } from "../models/index.js"
+import { Categoria, Propiedad } from "../models/index.js"
 import Credito from "../models/Credito.js"
 import { validationResult } from "express-validator";
 
 const inicio = async(req, res) => {
 
 
-    const  [categorias , precios, casas, departamentos] = await Promise.all([
+    const  [categorias,  casas, departamentos] = await Promise.all([
         Categoria.findAll({raw: true}),
-        Precio.findAll({raw: true}),
         Propiedad.findAll({
             limit: 3,
             where:{
                 categoriaId: 1
             },
-            include:[
+            /*include:[
                 {
                     model: Precio,
                     as: 'precio'
                 }
-            ],
+            ],*/
             order:[
                 ['createdAt','DESC']
             ]
@@ -29,12 +28,12 @@ const inicio = async(req, res) => {
             where:{
                 categoriaId: 2
             },
-            include:[
+            /*include:[
                 {
                     model: Precio,
                     as: 'precio'
                 }
-            ],
+            ],*/
             order:[
                 ['createdAt','DESC']
             ]
@@ -46,7 +45,7 @@ const inicio = async(req, res) => {
     res.render('inicio', {
         pagina:'Inicio',
         categorias,
-        precios,
+        //precios,
         casas,
         departamentos,
         csrfToken: req.csrfToken()   
@@ -67,9 +66,9 @@ const categoria = async(req, res) => {
         where:{
             categoriaId: id
         },
-        include:[
+        /*include:[
             {model:Precio, as: 'precio'}
-        ]
+        ]*/
     })
 
     res.render('categoria', {
@@ -124,6 +123,7 @@ const crearCalculo = async (req, res) => {
     const plazoMeses = plazoAnios * 12;
     const pagoMensual = montoCapital * (TEMp / (1 - Math.pow(1 + TEMp, -plazoMeses)));
 
+    
     try {
         const creditoGuardado = await Credito.create({
             montoInmueble,
@@ -145,6 +145,7 @@ const crearCalculo = async (req, res) => {
     }
 
 }
+
 
 /* const credito = (req, res) => {
 
@@ -191,9 +192,9 @@ const buscador = async (req, res) => {
                 [Sequelize.Op.like] : '%' + termino + '%' //buscando un termino en cualquier lugar
             },
         },
-        include:[
+        /*include:[
             { model: Precio, as: 'precio' }
-        ]
+        ]*/
     })
     
     res.render('busqueda',{

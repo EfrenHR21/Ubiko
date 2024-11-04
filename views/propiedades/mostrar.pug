@@ -32,11 +32,13 @@ block contenido
                             span(class="text-gray-800 block text-lg")= propiedad.estacionamiento
                         
                         p(class="text-gray-600 font-bold text-xs") Precio   
-                            span(class="text-gray-800 block text-lg")= propiedad.precio.nombre
+                            span(class="text-gray-800 block text-lg")= propiedad.precio
 
                         p(class="text-gray-600 font-bold text-xs") Visitas  
                             span(class="text-gray-800 block text-lg")= propiedad.visitas
 
+                        p(class="text-gray-600 font-bold text-xs") Vendedor  
+                            span(class="text-gray-800 block text-lg")= propiedad.usuario.nombre
 
             aside(class="md:w-1/3")
                 h3(class="text-center py-10 leading-6 text-2xl font-bold text-gray-900") Ubicación
@@ -68,9 +70,9 @@ block contenido
                                     label(for="mensaje") Mensaje 
                                     textarea(id="mensaje" name="mensaje" class="w-full py-2 border border-gray-300 rounded-lg shadow placeholder-gray-400" placeholder="Envíale un mensaje al propietario") 
                                     
-                                    input(type="submit" value="Enviar Mensaje" class="bg-indigo-600 text-white font-bold uppercase text-sm w-full px-2 cursor-pointer")
+                                    input(type="submit" value="Enviar Mensaje" class="bg-indigo-600 text-white font-bold uppercase text-sm w-full px-3 cursor-pointer")
 
-                                input(type="submit" value="Simular Credito" class="bg-indigo-600 text-white font-bold uppercase text-sm w-full px-2 cursor-pointer")
+                                
                         
                         else
                             div(class="flex flex-col items-center justify-center gap-2")

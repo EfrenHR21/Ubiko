@@ -13,15 +13,16 @@ block contenido
       // Campo select para propiedades
       div(class="mb-4")
         label.block.text-sm.uppercase.text-gray-500.mb-2.mt-2.font-bold(for="propiedad") Propiedad
-        select#propiedad.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(name="propiedad")
-            option(value="") - Seleccione -
-            each propiedad in propiedades
-              option(value=propiedad.id selected= datos.propiedad ? datos.propiedad == propiedad.id ? true : false : null )= propiedad.titulo
+        select#propiedad.w-full.px-3.py-2.border.border-indigo-500.rounded-xl.placeholder-gray-400(name="propiedad" onchange="mostrarPrecio()")
+          option(value="") - Seleccione -
+          each propiedad in propiedades
+            option(value=propiedad.id data-precio=propiedad.precio selected= datos.propiedad ? datos.propiedad == propiedad.id ? true : false : null )= propiedad.titulo
 
       input(type="hidden" name="_csrf" value=csrfToken)
       div(class="mb-4")
-        label(for="montoInmueble" class="block text-gray-700 text-sm font-bold mb-2") Monto del inmueble:
-        input#montoInmueble(type="number" min="0" step="0.01" required name="montoInmueble" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline")
+        label(for="montoInmueble" class="block text-gray-700 text-sm font-bold mb-2") Monto del Inmueble
+          input#montoInmueble(type="number" name="montoInmueble" readonly class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline")
+
       div(class="mb-4")
         label(for="cuotaInicialPorcentaje" class="block text-gray-700 text-sm font-bold mb-2") Porcentaje de cuota inicial (%):
         input#cuotaInicialPorcentaje(type="number" min="0" max="100" step="0.01" required name="cuotaInicialPorcentaje" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline")
@@ -62,13 +63,6 @@ block contenido
 
       //- Tabla para mostrar el cronograma
       table(id="tablaCronograma" class="w-full m-auto bg-white mt-4 border border-gray-300")
-        thead
-          tr
-            th(class="px-4 py-2 border-b font-semibold text-gray-700") Mes
-            th(class="px-4 py-2 border-b font-semibold text-gray-700") Pago Mensual
-            th(class="px-4 py-2 border-b font-semibold text-gray-700") Interés Mensual
-            th(class="px-4 py-2 border-b font-semibold text-gray-700") Aporte Capital
-            th(class="px-4 py-2 border-b font-semibold text-gray-700") Saldo
-        tbody
+        
 
   script(src="/js/simulacion.js")

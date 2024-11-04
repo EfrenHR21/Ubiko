@@ -38,3 +38,5 @@ document.getElementById('simulationForm').addEventListener('submit', async funct
       alert('Error en la conexión con el servidor.', error);
     }
   });
+
+  
